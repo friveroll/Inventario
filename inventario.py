@@ -35,7 +35,7 @@ def main():
 		comentario = str(raw_input('Comentario: '))
 		a = item(categoria, nombre, cantidad, foto, comentario)
 		database.equipo.insert(a.getItem())
-		c = str(raw_input('Añadir otro objeto S/N: ')).lower()
+		c = str(raw_input('Otro objeto S/N: ')).lower()
 		if c == 'n':
 			continuar = False
 main()
