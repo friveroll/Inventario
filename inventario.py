@@ -29,14 +29,14 @@ def main():
     if connection is not None:   	
 	continuar = True
 	while continuar:
-		categoria = str(raw_input('Categoria: '))
-		nombre = str(raw_input('Nombre: '))
-		cantidad = int(raw_input('Cantidad: '))
-		foto = str(raw_input('Foto: '))
-		comentario = str(raw_input('Comentario: '))
+		categoria = str(unicode(raw_input('Categoria: ')))
+		nombre = str(unicode(raw_input('Nombre: ')))
+		cantidad = int(unicode(raw_input('Cantidad: ')))
+		foto = str(unicode(raw_input('Foto: ')))
+		comentario = str(unicode(raw_input('Comentario: ')))
 		a = item(categoria, nombre, cantidad, foto, comentario)
 		database.equipo.insert(a.getItem())
-		c = str(raw_input('Otro objeto S/N: ')).lower()
+		c = str(unicode(raw_input('Otro objeto S/N: ').lower()))
 		if c == 'n':
 			continuar = False
 main()
