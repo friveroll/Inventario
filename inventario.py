@@ -29,11 +29,11 @@ def main():
     if connection is not None:   	
 	continuar = True
 	while continuar:
-		categoria = str(raw_input('Categoria: ')).encode("utf-8")
-		nombre = str(raw_input('Nombre: ')).encode("utf-8")
+		categoria = str(raw_input('Categoria: '))
+		nombre = str(raw_input('Nombre: '))
 		cantidad = int(raw_input('Cantidad: '))
 		foto = str(raw_input('Foto: '))
-		comentario = str(raw_input('Comentario: ')).encode("utf-8")
+		comentario = str(raw_input('Comentario: '))
 		a = item(categoria, nombre, cantidad, foto, comentario)
 		database.equipo.insert(a.getItem())
 		c = str(raw_input('Otro objeto S/N: ')).lower()
