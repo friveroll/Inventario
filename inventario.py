@@ -1,25 +1,46 @@
 # -*- coding: utf-8 -*-
-import sys
+import sys, os
 import pymongo
+import codecs
+import Tkinter,tkFileDialog
 
 class item(object):
-	def __init__(self, categoria, nombre, cantidad, foto, comentario):
-		self.categoria = categoria
-		self.nombre = nombre
-		self.cantidad = cantidad
-		self.foto = foto
-		self.comentario = comentario
+    def __init__(self, nombre, cantidad, foto, comentario):
+        self.nombre = nombre
+        self.cantidad = cantidad
+        self.foto = foto
+        self.comentario = comentario
 
-	def getItem(self):
-		return {'categoria':self.categoria, 
-		        'nombre':self.nombre, 
-		        'cantidad':self.cantidad, 
-		        'foto':self.foto, 
-		        'comentario':self.comentario}
+
+    def getItem(self):
+         return {'nombre':self.nombre,
+                 'cantidad':self.cantidad,
+                 'foto':self.foto, 
+                 'comentario':self.comentario}
+
+
+def getFilename(filename=''):
+    root = Tkinter.Tk()
+    file = tkFileDialog.askopenfilename(parent=root, filetypes=(("Imagen",
+                                        "*.jpg"), ("All files", "*.*")))
+    return os.path.split(file)[1]
+
+def newItem():
+    enc = sys.stdin.encoding
+    nombre = raw_input('Nombre: ').decode(enc)
+    cantidad = raw_input('Cantidad: ').decode(enc)
+    foto = getFilename() #raw_input('Foto: ').decode(enc)
+    comentario = raw_input('Comentario: ').decode(enc)
+    a = item(nombre, cantidad, foto, comentario)
+    return a.getItem()
+
+
 
 def main():
     mongodb_uri = 'mongodb://localhost:27017'
     db_name = 'inventario'
+    enc = sys.stdin.encoding
+    
     try:
         connection = pymongo.Connection(mongodb_uri)
         database = connection[db_name]
@@ -29,16 +50,15 @@ def main():
     if connection is not None:   	
 	continuar = True
 	while continuar:
-		categoria = str(unicode(raw_input('Categoria: ')))
-		nombre = str(unicode(raw_input('Nombre: ')))
-		cantidad = int(unicode(raw_input('Cantidad: ')))
-		foto = str(unicode(raw_input('Foto: ')))
-		comentario = str(unicode(raw_input('Comentario: ')))
-		a = item(categoria, nombre, cantidad, foto, comentario)
-		database.equipo.insert(a.getItem())
-		c = str(unicode(raw_input('Otro objeto S/N: ').lower()))
+	    col = int(raw_input('Categoria: (1:Quimica, 2:Fisica, 3:Biologia)'))
+    	if col == 1:
+            database.quimica.insert(newItem())
+        elif col == 2:
+            database.fisica.insert(newItem())
+        elif col == 3:
+            database.biologia.insert(newItem())
+
+		c = str((raw_input('Otro objeto S/N: ').lower()))
 		if c == 'n':
 			continuar = False
 main()
-
-
