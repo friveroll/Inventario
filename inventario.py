@@ -23,6 +23,7 @@ def getFilename(filename=''):
     root = Tkinter.Tk()
     file = tkFileDialog.askopenfilename(parent=root, filetypes=(("Imagen",
                                         "*.jpg"), ("All files", "*.*")))
+    root.destroy()
     return os.path.split(file)[1]
 
 def newItem():
@@ -50,14 +51,7 @@ def main():
     if connection is not None:   	
 	continuar = True
 	while continuar:
-	    col = int(raw_input('Categoria: (1:Quimica, 2:Fisica, 3:Biologia)'))
-    	if col == 1:
-            database.quimica.insert(newItem())
-        elif col == 2:
-            database.fisica.insert(newItem())
-        elif col == 3:
-            database.biologia.insert(newItem())
-
+		database.equipo.insert(newItem())
 		c = str((raw_input('Otro objeto S/N: ').lower()))
 		if c == 'n':
 			continuar = False
